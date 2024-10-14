@@ -5,6 +5,8 @@ using UnityEngine;
 public class PuntoAparicion : MonoBehaviour
 {
 
+    public static PuntoAparicion Este;
+
     #region aparicion
 
     public Vector3 Centro;
@@ -15,6 +17,18 @@ public class PuntoAparicion : MonoBehaviour
 
     public List<ObjetosLanzar> objetosLanzar;
     #endregion
+
+
+    private void Awake(){
+        if (Este == null)
+        {
+            Este = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     private void OnDrawGizmos(){
         Gizmos.color= Color.yellow;
@@ -32,11 +46,12 @@ public class PuntoAparicion : MonoBehaviour
     }
 
     public void AparecerObjeto(){
-    ObjetosLanzar objetoAInstanciar = objetosLanzar[Random.Range(0, objetosLanzar.Count)];
-
+        ObjetosLanzar objetoAInstanciar = objetosLanzar[Random.Range(0, objetosLanzar.Count)];
+    Debug.Log("Instanciando objeto: " + objetoAInstanciar.name);  // Log para verificar la instancia
     GameObject frutaCreada = Instantiate(objetoAInstanciar.gameObject, Punto(), Quaternion.identity);
+    }
 }
 
 
     
-}
+

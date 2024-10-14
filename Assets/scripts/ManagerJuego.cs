@@ -11,25 +11,36 @@ public class ManagerJuego : MonoBehaviour
             Este = this;
         }
         else{
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
-    float LimiteTiempo = 0f;
+    public float LimiteTiempo = 0f;
 
-    
+    public IEnumerator IniciarContadorTiempo(){
+        while (LimiteTiempo > 0){
+            yield return new WaitForSecondsRealtime(1);
+            LimiteTiempo -= 1;
+        }
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        TerminarJuego();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void TerminarJuego(){
+        // Aquí puedes detener el juego, mostrar la pantalla de Game Over, etc.
+        Debug.Log("¡Tiempo terminado!");
+    }
+
+    // Start is called before the first frame update
+    void Start(){
+        StartCoroutine(IniciarContadorTiempo());
+        StartCoroutine(GenerarObjetos());
+    }
+
+    IEnumerator GenerarObjetos(){
+        while (true){
+            PuntoAparicion.Este.AparecerObjeto();  // Instancia un objeto al azar
+            yield return new WaitForSeconds(2f);  // Tiempo entre apariciones
+        }
     }
 }

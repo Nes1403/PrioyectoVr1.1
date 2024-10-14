@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bomba : MonoBehaviour, IActivable
 {
     public void Activar(){
-        Destroy(this);
+        Destroy(gameObject);
     }
 
 
