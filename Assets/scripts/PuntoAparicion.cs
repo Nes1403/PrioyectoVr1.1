@@ -16,6 +16,7 @@ public class PuntoAparicion : MonoBehaviour
     public float AlturaAparicion;
 
     public List<ObjetosLanzar> objetosLanzar;
+
     #endregion
 
 
@@ -36,11 +37,11 @@ public class PuntoAparicion : MonoBehaviour
     }
 
     public Vector3 Punto(){
-        float Angulo = Random.Range(0, 2*Mathf.PI);
+        float Angulo = Random.Range(0, Mathf.PI);
 
         float Ejex = RadioAparicion * Mathf.Cos(Angulo);
-        float Ejey = RadioAparicion * Mathf.Sin(Angulo);
-        float Ejez = Centro.z + AlturaAparicion;
+        float Ejez = RadioAparicion * Mathf.Sin(Angulo);
+        float Ejey = Centro.z + AlturaAparicion;
 
         return new Vector3(Ejex, Ejey, Ejez);
     }
@@ -49,7 +50,20 @@ public class PuntoAparicion : MonoBehaviour
         ObjetosLanzar objetoAInstanciar = objetosLanzar[Random.Range(0, objetosLanzar.Count)];
     Debug.Log("Instanciando objeto: " + objetoAInstanciar.name);  // Log para verificar la instancia
     GameObject frutaCreada = Instantiate(objetoAInstanciar.gameObject, Punto(), Quaternion.identity);
+    Rigidbody rb = frutaCreada.GetComponent<Rigidbody>();
+
+    if (rb != null)
+    {
+        // Aplica una fuerza hacia arriba (en el eje Y) para que el objeto se eleve
+        float fuerzaVertical = 300f;  // Puedes ajustar este valor según lo que necesites
+        rb.AddForce(Vector3.up * fuerzaVertical);
     }
+    else
+    {
+        Debug.LogWarning("El objeto no tiene un Rigidbody, no se puede aplicar la fuerza.");
+    }
+    }
+
 }
 
 

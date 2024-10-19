@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomba : MonoBehaviour, IActivable
+public class Bomba : ObjetosLanzar
 {
-    public void Activar(){
+    public override void Activar(){
         Destroy(gameObject);
     }
 

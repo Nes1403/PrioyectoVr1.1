@@ -38,9 +38,17 @@ public class ManagerJuego : MonoBehaviour
     }
 
     IEnumerator GenerarObjetos(){
-        while (true){
-            PuntoAparicion.Este.AparecerObjeto();  // Instancia un objeto al azar
-            yield return new WaitForSeconds(2f);  // Tiempo entre apariciones
+        while (true) 
+        {
+            int cantidadObjetos = Random.Range(1, 4 + 1);
+
+            for (int i = 0; i < cantidadObjetos; i++)
+            {
+                PuntoAparicion.Este.AparecerObjeto(); 
+            }
+
+            float tiempoEspera = Random.Range(2f, 5f);
+            yield return new WaitForSeconds(tiempoEspera);
         }
     }
 }
