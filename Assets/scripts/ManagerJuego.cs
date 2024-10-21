@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ManagerJuego : MonoBehaviour
 {
     static public ManagerJuego Este;
+
+    private bool JuegoActivo = true;
+
+    public int LimiteTiempo = 20;
+
+    private int ContadorTiempo;
+
+    public UnityEvent<int> ActualizaTiempo;
+
+    public UnityEvent TerminaJuego;
 
     private void Awake(){
         if(Este == null){
@@ -15,30 +26,32 @@ public class ManagerJuego : MonoBehaviour
         }
     }
 
-    public float LimiteTiempo = 0f;
-
     public IEnumerator IniciarContadorTiempo(){
-        while (LimiteTiempo > 0){
+        ContadorTiempo = LimiteTiempo;
+        while (0<ContadorTiempo && JuegoActivo){
             yield return new WaitForSecondsRealtime(1);
-            LimiteTiempo -= 1;
+            ContadorTiempo--;
+            ActualizaTiempo?.Invoke(ContadorTiempo);
         }
 
         TerminarJuego();
+        JuegoActivo = false;
     }
 
-    void TerminarJuego(){
-        // Aquí puedes detener el juego, mostrar la pantalla de Game Over, etc.
+    public void TerminarJuego(){
+        JuegoActivo= false;
+        TerminaJuego?.Invoke();
         Debug.Log("¡Tiempo terminado!");
     }
 
-    // Start is called before the first frame update
-    void Start(){
+    public void Inicio(){
+        JuegoActivo=true;
         StartCoroutine(IniciarContadorTiempo());
         StartCoroutine(GenerarObjetos());
     }
 
     IEnumerator GenerarObjetos(){
-        while (true) 
+        while (JuegoActivo) 
         {
             int cantidadObjetos = Random.Range(1, 4 + 1);
 

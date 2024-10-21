@@ -37,25 +37,24 @@ public class PuntoAparicion : MonoBehaviour
     }
 
     public Vector3 Punto(){
-        float Angulo = Random.Range(0, Mathf.PI);
+        float Angulo = Random.Range(0, 2.5f);
 
         float Ejex = RadioAparicion * Mathf.Cos(Angulo);
         float Ejez = RadioAparicion * Mathf.Sin(Angulo);
-        float Ejey = Centro.z + AlturaAparicion;
+        float Ejey = Centro.y + AlturaAparicion;
 
-        return new Vector3(Ejex, Ejey, Ejez);
+        return new Vector3(-Ejez, Ejey, -Ejex);
     }
 
     public void AparecerObjeto(){
         ObjetosLanzar objetoAInstanciar = objetosLanzar[Random.Range(0, objetosLanzar.Count)];
-    Debug.Log("Instanciando objeto: " + objetoAInstanciar.name);  // Log para verificar la instancia
     GameObject frutaCreada = Instantiate(objetoAInstanciar.gameObject, Punto(), Quaternion.identity);
     Rigidbody rb = frutaCreada.GetComponent<Rigidbody>();
 
     if (rb != null)
     {
-        // Aplica una fuerza hacia arriba (en el eje Y) para que el objeto se eleve
-        float fuerzaVertical = 300f;  // Puedes ajustar este valor según lo que necesites
+        
+        float fuerzaVertical =  Random.Range(300f, 500f);
         rb.AddForce(Vector3.up * fuerzaVertical);
     }
     else
