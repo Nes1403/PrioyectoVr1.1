@@ -14,6 +14,7 @@ public class Bomba : ObjetosLanzar
 
         if(collision.gameObject.CompareTag("espada")){
             ControladorVida.Este.RecibirDanio();
+            Activar();
         }
         if (collision.gameObject.CompareTag("piso"))
         {

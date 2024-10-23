@@ -37,7 +37,7 @@ public class PuntoAparicion : MonoBehaviour
     }
 
     public Vector3 Punto(){
-        float Angulo = Random.Range(0, 2.5f);
+        float Angulo = Random.Range(1.25f, 2f);
 
         float Ejex = RadioAparicion * Mathf.Cos(Angulo);
         float Ejez = RadioAparicion * Mathf.Sin(Angulo);
